@@ -3,7 +3,7 @@ Contributors: l3rady, robmiller
 Tags: plugin, updates, themes, core, git, svn, version, control
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 1.0
+Stable tag: 2.0
 
 A WordPress plugin to prevent automatic updates on your live sites.
 
@@ -32,6 +32,9 @@ everything's okay, you can then deploy the site as you usually would
   from upgrading.
 
 == Changelog ==
+
+= 2.0 =
+* Supports Multisite installs
 
 = 1.0 =
 * Initial release.
