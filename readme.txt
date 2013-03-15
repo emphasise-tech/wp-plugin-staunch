@@ -27,7 +27,9 @@ everything's okay, you can then deploy the site as you usually would
 
 * Install Plugin
 * Activate plugin
-* Place `define( "CAN_UPDATE", FALSE );` or `define( "CAN_UPDATE", TRUE );` in your config file.
+* Place `define( 'CAN_UPDATE', true );` in the config file of your
+  development site. Sites that don't have this line will be prevented
+  from upgrading.
 
 == Changelog ==
 
