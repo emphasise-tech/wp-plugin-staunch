@@ -9,31 +9,34 @@ Author URI: http://l3rady.com
 */
 
 // Stop direct access
-! defined( 'ABSPATH' ) and exit;
+!defined( 'ABSPATH' ) and exit;
 
-function bf_staunch_remove_roles_on_live()
-{
+function bf_staunch_remove_roles_on_live() {
 	// If not defined then by default set to FALSE
-	if( ! defined( "CAN_UPDATE" ) ) {
+	if ( !defined( "CAN_UPDATE" ) ) {
 		define( "CAN_UPDATE", FALSE );
 	}
 
-	$can_update = ( CAN_UPDATE ) ? "true" : "false";
-	$setting = get_option("bf_staunch_can_update");
+	// Disable the WP file editor.
+	if ( !CAN_UPDATE && !defined( "DISALLOW_FILE_EDIT" ) ) {
+		define( "DISALLOW_FILE_EDIT", TRUE );
+	}
 
-	if( $can_update === $setting ) {
+	$can_update = ( CAN_UPDATE ) ? "true" : "false";
+	$setting    = get_option( "bf_staunch_can_update" );
+
+	if ( $can_update === $setting ) {
 		return;
 	}
 
 	$role_obj = get_role( "administrator" );
 
 	// Did we fail to get admin role?
-	if( ! $role_obj ) {
+	if ( !$role_obj ) {
 		return;
 	}
 
-	if( CAN_UPDATE === TRUE )
-	{
+	if ( CAN_UPDATE === TRUE ) {
 		$role_obj->add_cap( "install_plugins" );
 		$role_obj->add_cap( "update_plugins" );
 		$role_obj->add_cap( "delete_plugins" );
@@ -42,8 +45,8 @@ function bf_staunch_remove_roles_on_live()
 		$role_obj->add_cap( "delete_themes" );
 
 		update_option( "bf_staunch_can_update", "true" );
-	} else
-	{
+	}
+	else {
 		$role_obj->remove_cap( "install_plugins" );
 		$role_obj->remove_cap( "update_plugins" );
 		$role_obj->remove_cap( "delete_plugins" );
@@ -60,4 +63,5 @@ function bf_staunch_remove_roles_on_live()
 	// git checkout {desired version}
 	$role_obj->remove_cap( "update_core" );
 }
+
 add_action( "init", "bf_staunch_remove_roles_on_live" );
